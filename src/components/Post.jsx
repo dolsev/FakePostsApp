@@ -7,7 +7,7 @@ function Post(props) {
       <div className="post" id={props.post.id}>
         <div className="post__content">
           <strong>
-            {props.number}. {props.post.title}
+            {props.post.id}. {props.post.title}
           </strong>
         </div>
         <div>{props.post.body}</div>

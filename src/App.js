@@ -1,19 +1,30 @@
-import React from 'react'
-import '../src/styles/App.css'
-import { BrowserRouter} from "react-router-dom";
-import Navbar from './components/UI/Navbar/Navbar';
-import AppRouter from './components/AppRouter';
+import React from "react";
+import "../src/styles/App.css";
+import { BrowserRouter } from "react-router-dom";
+import Navbar from "./components/UI/Navbar/Navbar";
+import AppRouter from "./components/AppRouter";
+import { AuthContext } from "./context";
+import { useState, useEffect } from "react";
 
 
-
-function App (){
+function App() {
+  const [isAuth, setIsAuth] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  useEffect(()=>{
+    if (localStorage.getItem('auth')){
+      setIsAuth(true)
+    }
+    setIsLoading(false)
+  })
   return (
-    <BrowserRouter>
-      <Navbar/>
-      <AppRouter/>
-    </BrowserRouter>
-  )
+    <AuthContext.Provider value={{isAuth, setIsAuth, isLoading}}>
+      <BrowserRouter>
+        <Navbar />
+        <AppRouter />
+      </BrowserRouter>
+    </AuthContext.Provider>
+  );
 }
 export default App;
 
-//2-23-15
+//2-47-20

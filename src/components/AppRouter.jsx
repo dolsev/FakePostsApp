@@ -1,23 +1,39 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import About from "../pages/About";
-import Posts from "../pages/Posts";
-import Error from "../pages/Error";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { publicRoutes,privateRoutes } from "../router/routes";
+import { useContext } from "react";
+import { AuthContext } from "../context";
+import Loader from "./UI/Loader/Loader";
 
 function AppRouter() {
+  const {isAuth, isLoading} = useContext(AuthContext);
+  if (isLoading){
+    return <Loader/>
+  }
   return (
-    <Switch>
-      <Route path="/posts">
-        <Posts />
-      </Route>
-      <Route path="/about">
-        <About />
-      </Route>
-      <Route path="/error">
-        <Error />
-      </Route>
-      <Redirect to="/error" />
-    </Switch>
+    isAuth
+    ?
+    <Routes>
+      {privateRoutes.map((route)=>{
+        return <Route 
+        path={route.path} 
+        element={route.element} 
+        exact={route.exact} key={route.path}/>
+      })}
+      <Route path="/*" element={<Navigate to="/posts" replace />} />
+  </Routes>
+      :
+      <Routes>
+      {publicRoutes.map((route)=>{
+        return <Route 
+        path={route.path} 
+        element={route.element} 
+        exact={route.exact} key={route.path}/>
+      })}
+        <Route path="/*" element={<Navigate to="/login" replace />} />
+
+      </Routes>
+
   );
 }
 

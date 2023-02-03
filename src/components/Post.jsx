@@ -1,11 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import MyButton from "./UI/button/MyButton";
-import { useHistory } from "react-router-dom";
 
 function Post(props) {
-  const router = useHistory()
-  console.log 
-  return (
+    const navigate=useNavigate()
+    return (
     <div>
       <div className="post" id={props.post.id}>
         <div className="post__content">
@@ -15,7 +14,7 @@ function Post(props) {
         </div>
         <div>{props.post.body}</div>
         <div className="post__btns">
-          <MyButton onClick={()=>props.remove(props.post)}>Open Post</MyButton>
+          <MyButton onClick={()=>navigate('/posts/'+props.post.id)}>Open Post</MyButton>
           <MyButton onClick={()=>props.remove(props.post)}>Delete</MyButton>
         </div>
       </div>

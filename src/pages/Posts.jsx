@@ -17,17 +17,20 @@ function Posts() {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState({ sort: "", query: "" });
   const [modal, setModal] = useState(false);
-  const [totalPages, setTotalPages] = useState(0)
-  const [limit, setLimit] = useState(10)
-  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
   const sortedAndSearchedPost = usePosts(posts, filter.sort, filter.query);
-  const [fetchPosts, isPostLoading, postError] = useFetching (async(limit,page)=>{
-    const response = await PostService.getAll(limit, page);
-    setPosts(response.data)
-    const totalCount = response.headers['x-total-count']
-    setTotalPages(getPagesCount(totalCount, limit))
+  const lastElement = useRef()
 
-  })
+  const [fetchPosts, isPostLoading, postError] = useFetching(
+    async (limit, page) => {
+      const response = await PostService.getAll(limit, page);
+      setPosts([...posts,...response.data]);
+      const totalCount = response.headers["x-total-count"];
+      setTotalPages(getPagesCount(totalCount, limit));
+    }
+  );
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
@@ -38,14 +41,17 @@ function Posts() {
     setPosts(posts.filter((p) => p.id !== post.id));
   };
 
+  useEffect(()=>{
+
+  }, [])
+
   useEffect(() => {
-    fetchPosts(limit,page);
+    fetchPosts(limit, page);
   }, []);
 
   const changePage = (page) => {
     setPage(page)
-    fetchPosts(limit,page)
-  }
+  };
 
   return (
     <div className="App">
@@ -57,19 +63,16 @@ function Posts() {
       </MyModal>
       <hr style={{ margin: "15px" }}></hr>
       <PostFilter filter={filter} setFilter={setFilter} />
-      {postError &&
-      <h1>Error ${postError}</h1>
-      }
-      {isPostLoading ? (
-        <div style={{display:'flex',justifyContent:'center',marginTop:'50px'}}><Loader /></div>
-      ) : (
-        <PostList remove={removePost} posts={sortedAndSearchedPost} />
-      )}
-      <Pagination totalPages={totalPages} page={page} changePage={changePage}/>
+      {postError && <h1>Error ${postError}</h1>}
+      <PostList remove={removePost} posts={sortedAndSearchedPost} />
+      {isPostLoading && <div style={{display: "flex",justifyContent: "center",marginTop: "50px"}}>
+      <Loader/></div>}
+      <div style={{height:'20px'}}></div>
+      <Pagination totalPages={totalPages} page={page} changePage={changePage} />
     </div>
   );
 }
 
 export default Posts;
 
-//2-04-43 React From Ubi
+//2-47-43 React From Ubi

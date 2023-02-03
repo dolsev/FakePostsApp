@@ -2,7 +2,7 @@ import React from "react";
 import Post from "./Post";
 import {TransitionGroup,CSSTransition} from 'react-transition-group'
 
-function PostList({ posts,remove }) {
+function PostList({ posts,remove, title }) {
 
   if (!posts.length){
     return (
@@ -13,7 +13,7 @@ function PostList({ posts,remove }) {
 
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>Posts List For You</h1>
+      <h1 style={{ textAlign: "center" }}>{title}</h1>
 
       <TransitionGroup>
       {posts.map((item, index) => (

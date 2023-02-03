@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/FakePostsApp/static/css/main.d3943d2e.css",
+    "main.js": "/FakePostsApp/static/js/main.f07e362e.js",
+    "index.html": "/FakePostsApp/index.html",
+    "main.d3943d2e.css.map": "/FakePostsApp/static/css/main.d3943d2e.css.map",
+    "main.f07e362e.js.map": "/FakePostsApp/static/js/main.f07e362e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d3943d2e.css",
+    "static/js/main.f07e362e.js"
+  ]
+}

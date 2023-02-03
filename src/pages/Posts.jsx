@@ -100,4 +100,3 @@ function Posts() {
 
 export default Posts;
 
-//2-47-43 React From Ubi
